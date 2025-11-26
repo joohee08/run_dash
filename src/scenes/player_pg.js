@@ -219,6 +219,44 @@ class player_pg extends Phaser.Scene {
 				});
 			}
 		});
+
+
+		//뒤로가기 버튼 임시
+
+		const backBtn = this.children.list.find(obj => obj.texture?.key === "back");
+
+		if (backBtn) {
+			backBtn.setInteractive({ useHandCursor: true });
+
+			const defaultScale = 0.25;
+
+			// 작게 눌리는 효과
+			backBtn.on("pointerdown", () => {
+				this.tweens.add({
+					targets: backBtn,
+					scale: defaultScale * 0.85,
+					duration: 80,
+					ease: "Quad.easeOut"
+				});
+			});
+
+			// 떼면 원래 크기로 + Level 씬 이동
+			backBtn.on("pointerup", () => {
+
+				this.tweens.add({
+					targets: backBtn,
+					scale: defaultScale,
+					duration: 100,
+					ease: "Bounce.easeOut"
+				});
+
+				// Level 씬으로 이동
+				this.scene.start("Level");
+			});
+
+			// 마우스 벗어나면 원래 크기 복구
+			backBtn.on("pointerout", () => backBtn.setScale(defaultScale));
+		}
 	}
 
 }
