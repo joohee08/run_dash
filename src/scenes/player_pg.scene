@@ -1,0 +1,222 @@
+{
+    "id": "0f5b43a5-01ce-4dcb-a54a-40d8d6e6dea4",
+    "sceneType": "SCENE",
+    "settings": {
+        "preloadPackFiles": [],
+        "createMethodName": "editorCreate",
+        "sceneKey": "player_pg",
+        "borderWidth": 1280,
+        "borderHeight": 720
+    },
+    "displayList": [
+        {
+            "type": "Image",
+            "id": "2fe34fcd-2e68-4207-816e-697a9cbd0406",
+            "label": "my_back",
+            "hitArea.shape": "RECTANGLE",
+            "hitArea.width": 1920,
+            "hitArea.height": 1080,
+            "texture": {
+                "key": "my_back"
+            },
+            "x": 641,
+            "y": 358,
+            "scaleX": 0.67,
+            "scaleY": 0.681
+        },
+        {
+            "type": "Image",
+            "id": "0d9d4515-0b9a-40b1-a835-3189c1907738",
+            "label": "shadow",
+            "texture": {
+                "key": "shadow"
+            },
+            "x": 639,
+            "y": 365,
+            "scaleX": 0.67,
+            "scaleY": 0.681
+        },
+        {
+            "type": "Image",
+            "id": "9be553c5-9be8-485a-8458-f13299d7cd9b",
+            "label": "setting_btn",
+            "texture": {
+                "key": "setting_btn"
+            },
+            "x": 1232,
+            "y": 47,
+            "scaleX": 0.08,
+            "scaleY": 0.08
+        },
+        {
+            "type": "Image",
+            "id": "87c177cb-4408-4984-8acb-8c8504327394",
+            "label": "my_btn2",
+            "texture": {
+                "key": "my_btn2"
+            },
+            "x": 142,
+            "y": 606,
+            "scaleX": 0.35,
+            "scaleY": 0.35
+        },
+        {
+            "type": "Image",
+            "id": "643d6029-550b-48ed-bffe-00cc0e885abd",
+            "label": "my_btn3",
+            "texture": {
+                "key": "my_btn3"
+            },
+            "x": 342,
+            "y": 608,
+            "scaleX": 0.35,
+            "scaleY": 0.35
+        },
+        {
+            "type": "Image",
+            "id": "981ee9be-ad29-415b-ac9b-60f22a614554",
+            "label": "my_btn4",
+            "texture": {
+                "key": "my_btn4"
+            },
+            "x": 546,
+            "y": 607,
+            "scaleX": 0.35,
+            "scaleY": 0.35
+        },
+        {
+            "type": "Image",
+            "id": "92a99999-bb43-4b2c-ad6a-85b6faa75e58",
+            "label": "my_ques",
+            "texture": {
+                "key": "my_ques"
+            },
+            "x": 1143,
+            "y": 613,
+            "scaleX": 0.1,
+            "scaleY": 0.1
+        },
+        {
+            "type": "Image",
+            "id": "4423d570-2cb7-4930-9001-faf7da4a7415",
+            "label": "my_btn",
+            "texture": {
+                "key": "my_btn"
+            },
+            "x": 974,
+            "y": 612,
+            "scaleX": 0.4,
+            "scaleY": 0.4
+        },
+        {
+            "type": "Container",
+            "id": "e0bef33a-9efe-4797-8c3f-8b64983ffcfa",
+            "label": "container_1",
+            "x": 974,
+            "y": 331,
+            "list": [
+                {
+                    "type": "Rectangle",
+                    "id": "22d966c4-c626-4499-b212-6e48a42fc7f7",
+                    "label": "rectangle_1",
+                    "y": 1,
+                    "scaleX": 3.05,
+                    "scaleY": 2.9,
+                    "isFilled": true,
+                    "fillColor": "#4788c7",
+                    "width": 128,
+                    "height": 128
+                },
+                {
+                    "type": "Rectangle",
+                    "id": "cc369189-7b2a-4935-9c44-e75299b0d8d4",
+                    "label": "rectangle_2",
+                    "y": -21,
+                    "scaleX": 2.8,
+                    "scaleY": 2.15,
+                    "isFilled": true,
+                    "fillColor": "#b6dcfe",
+                    "width": 128,
+                    "height": 128
+                }
+            ]
+        },
+        {
+            "type": "Container",
+            "id": "543bde38-84b9-497d-9e33-77a9a55e37e5",
+            "label": "container_2",
+            "x": 974,
+            "y": 242,
+            "list": [
+                {
+                    "type": "Rectangle",
+                    "id": "28a78315-c695-45ae-9fcf-c89cad08ff84",
+                    "label": "rectangle_3",
+                    "y": 86,
+                    "scaleX": 2.8,
+                    "scaleY": 1.85,
+                    "isFilled": true,
+                    "fillColor": "#b6dcfe",
+                    "strokeColor": "#000000",
+                    "isStroked": true,
+                    "width": 128,
+                    "height": 128
+                },
+                {
+                    "type": "Rectangle",
+                    "id": "b478cab0-55c2-409e-b2a2-852511561a65",
+                    "label": "rectangle_4",
+                    "scaleX": 2.8,
+                    "scaleY": 0.46,
+                    "isFilled": true,
+                    "fillColor": "#4788c7",
+                    "width": 128,
+                    "height": 128
+                },
+                {
+                    "type": "Rectangle",
+                    "id": "ed6dba98-9113-4285-9c97-8e618054d235",
+                    "label": "rectangle",
+                    "y": 116,
+                    "scaleX": 2.8,
+                    "scaleY": 0.46,
+                    "isFilled": true,
+                    "fillColor": "#4788c7",
+                    "width": 128,
+                    "height": 128
+                }
+            ]
+        },
+        {
+            "type": "Image",
+            "id": "d1051637-90d7-4c90-a96a-839cfde2547b",
+            "label": "my_rankbtn",
+            "texture": {
+                "key": "my_rankbtn"
+            },
+            "x": 970,
+            "y": 149,
+            "scaleX": 0.55,
+            "scaleY": 0.55
+        },
+        {
+            "type": "Image",
+            "id": "d7de95e5-317e-4499-b639-5f903e0014c6",
+            "label": "back",
+            "texture": {
+                "key": "back"
+            },
+            "x": 46,
+            "y": 35,
+            "scaleX": 0.25,
+            "scaleY": 0.25
+        }
+    ],
+    "plainObjects": [],
+    "meta": {
+        "app": "Phaser Editor - Scene Editor",
+        "url": "https://phaser.io/editor",
+        "contentType": "phasereditor2d.core.scene.SceneContentType",
+        "version": 5
+    }
+}

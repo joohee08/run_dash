@@ -1,0 +1,486 @@
+{
+    "section1": {
+        "files": [
+            {
+                "url": "assets/all/all_attack.png",
+                "type": "image",
+                "key": "all_attack"
+            },
+            {
+                "url": "assets/all/all_go.png",
+                "type": "image",
+                "key": "all_go"
+            },
+            {
+                "url": "assets/all/all_stop.png",
+                "type": "image",
+                "key": "all_stop"
+            },
+            {
+                "url": "assets/all/back.png",
+                "type": "image",
+                "key": "back"
+            },
+            {
+                "url": "assets/character/brory.png",
+                "type": "image",
+                "key": "brory"
+            },
+            {
+                "url": "assets/mypage/brory_batch.png",
+                "type": "image",
+                "key": "brory_batch"
+            },
+            {
+                "url": "assets/spritesheet/brorysheet.png",
+                "frameConfig": {
+                    "frameWidth": 32,
+                    "frameHeight": 32,
+                    "startFrame": 0,
+                    "endFrame": -1,
+                    "spacing": 0,
+                    "margin": 0
+                },
+                "type": "spritesheet",
+                "key": "brory_sheet"
+            },
+            {
+                "url": "assets/all/btn.png",
+                "type": "image",
+                "key": "btn"
+            },
+            {
+                "url": "assets/charac_sel/cha_arrow.png",
+                "type": "image",
+                "key": "cha_arrow"
+            },
+            {
+                "url": "assets/charac_sel/cha_back.png",
+                "type": "image",
+                "key": "cha_back"
+            },
+            {
+                "url": "assets/charac_sel/cha_basket.png",
+                "type": "image",
+                "key": "cha_basket"
+            },
+            {
+                "url": "assets/charac_sel/cha_ok.png",
+                "type": "image",
+                "key": "cha_ok"
+            },
+            {
+                "url": "assets/charac_sel/cha_rec.png",
+                "type": "image",
+                "key": "cha_rec"
+            },
+            {
+                "url": "assets/charac_sel/cha_selrec.png",
+                "type": "image",
+                "key": "cha_selrec"
+            },
+            {
+                "url": "assets/character/conky.png",
+                "type": "image",
+                "key": "conky"
+            },
+            {
+                "url": "assets/mypage/conky_batch.png",
+                "type": "image",
+                "key": "conky_batch"
+            },
+            {
+                "url": "assets/spritesheet/conkysheet.png",
+                "frameConfig": {
+                    "frameWidth": 32,
+                    "frameHeight": 32,
+                    "startFrame": 0,
+                    "endFrame": -1,
+                    "spacing": 0,
+                    "margin": 0
+                },
+                "type": "spritesheet",
+                "key": "conkysheet"
+            },
+            {
+                "url": "assets/all/energy.png",
+                "type": "image",
+                "key": "energy"
+            },
+            {
+                "url": "assets/first/f_back.png",
+                "type": "image",
+                "key": "f_back_1"
+            },
+            {
+                "url": "assets/first/f_btn.png",
+                "type": "image",
+                "key": "f_btn_1"
+            },
+            {
+                "url": "assets/first/f_btn2.png",
+                "type": "image",
+                "key": "f_btn_2"
+            },
+            {
+                "url": "assets/first/f_input.png",
+                "type": "image",
+                "key": "f_input_1"
+            },
+            {
+                "url": "assets/first/f_txt.png",
+                "type": "image",
+                "key": "f_txt_1"
+            },
+            {
+                "url": "assets/all/g_coin.png",
+                "type": "image",
+                "key": "g_coin"
+            },
+            {
+                "url": "assets/all/g_stick.png",
+                "type": "image",
+                "key": "g_stick"
+            },
+            {
+                "url": "assets/all/heart.png",
+                "type": "image",
+                "key": "heart"
+            },
+            {
+                "url": "assets/map1/m_1.png",
+                "type": "image",
+                "key": "m_1"
+            },
+            {
+                "url": "assets/map1/m_2.png",
+                "type": "image",
+                "key": "m_2"
+            },
+            {
+                "url": "assets/map1/m_3.png",
+                "type": "image",
+                "key": "m_3"
+            },
+            {
+                "url": "assets/map1/m_4.png",
+                "type": "image",
+                "key": "m_4"
+            },
+            {
+                "url": "assets/map1/m_5.png",
+                "type": "image",
+                "key": "m_5"
+            },
+            {
+                "url": "assets/map1/m_6.png",
+                "type": "image",
+                "key": "m_6"
+            },
+            {
+                "url": "assets/map1/m_6_4.png",
+                "type": "image",
+                "key": "m_6_4"
+            },
+            {
+                "url": "assets/map1/m_7.png",
+                "type": "image",
+                "key": "m_7"
+            },
+            {
+                "url": "assets/map1/m_8.png",
+                "type": "image",
+                "key": "m_8"
+            },
+            {
+                "url": "assets/map1/m_back.png",
+                "type": "image",
+                "key": "m_back"
+            },
+            {
+                "url": "assets/map1/m_lock.png",
+                "type": "image",
+                "key": "m_lock"
+            },
+            {
+                "url": "assets/map1/m_namebtn.png",
+                "type": "image",
+                "key": "m_namebtn"
+            },
+            {
+                "url": "assets/map1/m_namebtn1.png",
+                "type": "image",
+                "key": "m_namebtn1"
+            },
+            {
+                "url": "assets/map1/m_namebtn2.png",
+                "type": "image",
+                "key": "m_namebtn2"
+            },
+            {
+                "url": "assets/map1/m_namebtn3.png",
+                "type": "image",
+                "key": "m_namebtn3"
+            },
+            {
+                "url": "assets/map1/m_namebtn4.png",
+                "type": "image",
+                "key": "m_namebtn4"
+            },
+            {
+                "url": "assets/map1/m_namebtn5.png",
+                "type": "image",
+                "key": "m_namebtn5"
+            },
+            {
+                "url": "assets/map1/m_namebtn6.png",
+                "type": "image",
+                "key": "m_namebtn6"
+            },
+            {
+                "url": "assets/map1/m_namebtn7.png",
+                "type": "image",
+                "key": "m_namebtn7"
+            },
+            {
+                "url": "assets/map1/m_namebtn8.png",
+                "type": "image",
+                "key": "m_namebtn8"
+            },
+            {
+                "url": "assets/map1/m_point.png",
+                "type": "image",
+                "key": "m_point"
+            },
+            {
+                "url": "assets/mypage/my_back.png",
+                "type": "image",
+                "key": "my_back"
+            },
+            {
+                "url": "assets/mypage/my_board.png",
+                "type": "image",
+                "key": "my_board"
+            },
+            {
+                "url": "assets/my_btn.png",
+                "type": "image",
+                "key": "my_btn"
+            },
+            {
+                "url": "assets/mypage/my_btn2.png",
+                "type": "image",
+                "key": "my_btn2"
+            },
+            {
+                "url": "assets/mypage/my_btn3.png",
+                "type": "image",
+                "key": "my_btn3"
+            },
+            {
+                "url": "assets/mypage/my_btn4.png",
+                "type": "image",
+                "key": "my_btn4"
+            },
+            {
+                "url": "assets/mypage/my_color.png",
+                "type": "image",
+                "key": "my_color"
+            },
+            {
+                "url": "assets/mypage/my_list.png",
+                "type": "image",
+                "key": "my_list"
+            },
+            {
+                "url": "assets/mypage/my_map.png",
+                "type": "image",
+                "key": "my_map"
+            },
+            {
+                "url": "assets/mypage/my_prog1.png",
+                "type": "image",
+                "key": "my_prog1"
+            },
+            {
+                "url": "assets/mypage/my_prog2.png",
+                "type": "image",
+                "key": "my_prog2"
+            },
+            {
+                "url": "assets/mypage/my_ques.png",
+                "type": "image",
+                "key": "my_ques"
+            },
+            {
+                "url": "assets/my_rankbtn.png",
+                "type": "image",
+                "key": "my_rankbtn"
+            },
+            {
+                "url": "assets/mypage/my_reset.png",
+                "type": "image",
+                "key": "my_reset"
+            },
+            {
+                "url": "assets/mypage/my_txt1.png",
+                "type": "image",
+                "key": "my_txt1"
+            },
+            {
+                "url": "assets/mypage/my_txt2.png",
+                "type": "image",
+                "key": "my_txt2"
+            },
+            {
+                "url": "assets/mypage/my_txt3.png",
+                "type": "image",
+                "key": "my_txt3"
+            },
+            {
+                "url": "assets/character/pachang.png",
+                "type": "image",
+                "key": "pachang"
+            },
+            {
+                "url": "assets/mypage/pachang_batch.png",
+                "type": "image",
+                "key": "pachang_batch"
+            },
+            {
+                "url": "assets/spritesheet/pachangsheet.png",
+                "frameConfig": {
+                    "frameWidth": 32,
+                    "frameHeight": 32,
+                    "startFrame": 0,
+                    "endFrame": -1,
+                    "spacing": 0,
+                    "margin": 0
+                },
+                "type": "spritesheet",
+                "key": "pachangsheet"
+            },
+            {
+                "url": "assets/all/pause.png",
+                "type": "image",
+                "key": "pause"
+            },
+            {
+                "url": "assets/all/play.png",
+                "type": "image",
+                "key": "play"
+            },
+            {
+                "url": "assets/character/pote.png",
+                "type": "image",
+                "key": "pote"
+            },
+            {
+                "url": "assets/mypage/pote_batch.png",
+                "type": "image",
+                "key": "pote_batch"
+            },
+            {
+                "url": "assets/spritesheet/potesheet.png",
+                "frameConfig": {
+                    "frameWidth": 32,
+                    "frameHeight": 32,
+                    "startFrame": 0,
+                    "endFrame": -1,
+                    "spacing": 0,
+                    "margin": 0
+                },
+                "type": "spritesheet",
+                "key": "potesheet"
+            },
+            {
+                "url": "assets/character/pyogoni.png",
+                "type": "image",
+                "key": "pyogoni"
+            },
+            {
+                "url": "assets/mypage/pyogoni_batch.png",
+                "type": "image",
+                "key": "pyogoni_batch"
+            },
+            {
+                "url": "assets/spritesheet/pyogonisheet.png",
+                "frameConfig": {
+                    "frameWidth": 32,
+                    "frameHeight": 32,
+                    "startFrame": 0,
+                    "endFrame": -1,
+                    "spacing": 0,
+                    "margin": 0
+                },
+                "type": "spritesheet",
+                "key": "pyogonisheet"
+            },
+            {
+                "url": "assets/all/quesbean.png",
+                "type": "image",
+                "key": "quesbean"
+            },
+            {
+                "url": "assets/all/s_coin.png",
+                "type": "image",
+                "key": "s_coin"
+            },
+            {
+                "url": "assets/all/score.png",
+                "type": "image",
+                "key": "score"
+            },
+            {
+                "url": "assets/all/setting_btn.png",
+                "type": "image",
+                "key": "setting_btn"
+            },
+            {
+                "url": "assets/all/setting_btn_black.png",
+                "type": "image",
+                "key": "setting_btn_black"
+            },
+            {
+                "url": "assets/mypage/shadow.png",
+                "type": "image",
+                "key": "shadow"
+            },
+            {
+                "url": "assets/character/tomang.png",
+                "type": "image",
+                "key": "tomang"
+            },
+            {
+                "url": "assets/mypage/tomang_batch.png",
+                "type": "image",
+                "key": "tomang_batch"
+            },
+            {
+                "url": "assets/spritesheet/tomangsheet.png",
+                "frameConfig": {
+                    "frameWidth": 32,
+                    "frameHeight": 32,
+                    "startFrame": 0,
+                    "endFrame": -1,
+                    "spacing": 0,
+                    "margin": 0
+                },
+                "type": "spritesheet",
+                "key": "tomangsheet"
+            },
+            {
+                "url": "assets/all/x_btn.png",
+                "type": "image",
+                "key": "x_btn"
+            }
+        ]
+    },
+    "meta": {
+        "app": "Phaser Editor 2D - Asset Pack Editor",
+        "contentType": "phasereditor2d.pack.core.AssetContentType",
+        "url": "https://phasereditor2d.com",
+        "version": 2,
+        "showAllFilesInBlocks": false
+    }
+}
