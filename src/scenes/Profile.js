@@ -290,31 +290,12 @@ class Profile extends Phaser.Scene {
 			   }
 			});
 
-			//첫화면에서 가져온 닉네임 변경하기
-			//원래 닉네임 불러오기
-			let nickname = localStorage.getItem("user_nickname") || "게스트";
-
-			//닉네임 입력창 생성
-			this.nameInput = document.createElement("input");
-			this.nameInput.type = "text";
-			this.nameInput.value = nickname;
-			this.nameInput.placeholder = "닉네임을 입력하세요";
 			
+			//여기서부터 시작 닉네임 부분 코드 위치 재수정필요 기능에는 문제가 없음
+			this.createNameInput(px, py);
 
-			Object.assign(this.nameInput.style, {
-				position: "absolute",
-				left: (px + 180) + "px",
-				top: (py + 270) + "px",
-				fontSize: "20px",
-				padding: "6px 10px",
-				border: "1px solid #ccc",
-				borderRadius: "6px",
-				zIndex: 1000
-			});
-
-			document.body.appendChild(this.nameInput);
-
-			const saveNameBtn = this.add.text(px - 55, py + 230, "변경하기", {
+			 // 닉네임 저장 버튼
+			const saveNameBtn = this.add.text(px - 45, py + 230, "변경하기", {
 				fontFamily: "Pretendard",
 				fontSize: "16px",
 				backgroundColor: "#000",
@@ -324,21 +305,14 @@ class Profile extends Phaser.Scene {
 			.setInteractive({ useHandCursor: true });
 
 			saveNameBtn.on("pointerdown", () => {
-				
-				const newName = this.nameInput.value.trim();
 
-				if (newName.length === 0) return;
+				const newName = this.nameDom.getChildByID("profileNameInput").value.trim();
+				if (!newName) return;
 
-				// 변경사항 업데이트
 				localStorage.setItem("user_nickname", newName);
-
 				this.registry.set("nickname", newName);
 
-				this.nameInput.value = newName;
-
 				alert("닉네임이 변경되었습니다!");
-
-				console.log("닉네임 변경됨:", newName);
 			});
 
 			this.events.once("shutdown", () => {
@@ -362,6 +336,36 @@ class Profile extends Phaser.Scene {
 
 
 	
+	}
+
+	// Phaser DOM 방식으로 닉네임 입력창 생성
+	createNameInput(px, py) {
+
+		// DOM input 요소 생성
+		this.nameDom = this.add.dom(px - 10, py + 190).createFromHTML(`
+			<input id="profileNameInput" 
+				type="text"
+				style="
+					width: 200px;
+					font-size: 20px;
+					padding: 6px 10px;
+					border: 1px solid #ccc;
+					border-radius: 6px;
+					box-sizing: border-box;
+				"
+			>
+		`);
+
+		this.nameDom.setOrigin(0.5);
+
+		// 기존 닉네임 자동 입력
+		const nickname = localStorage.getItem("user_nickname") || "게스트";
+		this.nameDom.getChildByID("profileNameInput").value = nickname;
+
+		// 씬 종료 시 DOM Element 제거
+		this.events.once("shutdown", () => {
+			if (this.nameDom) this.nameDom.destroy();
+		});
 	}
 
 
