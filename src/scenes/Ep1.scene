@@ -1,0 +1,181 @@
+{
+    "id": "bcac4dea-13e2-4e00-b2d4-0cf8b420a490",
+    "sceneType": "SCENE",
+    "settings": {
+        "preloadPackFiles": [
+            "run_dash/assets/ep-pack.json"
+        ],
+        "createMethodName": "editorCreate",
+        "sceneKey": "Ep1",
+        "borderWidth": 1280,
+        "borderHeight": 720
+    },
+    "displayList": [
+        {
+            "type": "Image",
+            "id": "cf1a89f0-92c1-4462-b28b-7f6b12a73428",
+            "label": "_1_back",
+            "texture": {
+                "key": "_1_back"
+            },
+            "x": 642,
+            "y": 358,
+            "scaleX": 0.67,
+            "scaleY": 0.67
+        },
+        {
+            "type": "Container",
+            "id": "4f5c7009-6958-457d-92ac-d695fe3b273e",
+            "label": "floor_1",
+            "x": 148,
+            "y": 669,
+            "list": [
+                {
+                    "type": "Image",
+                    "id": "77819dca-3279-4a86-8f21-6de52cfa4f8b",
+                    "label": "_1_flor",
+                    "texture": {
+                        "key": "_1_flor"
+                    },
+                    "y": 2
+                },
+                {
+                    "type": "Image",
+                    "id": "0ae15036-1a75-4373-ad41-00308a2cd1a3",
+                    "label": "_1_flor_1",
+                    "texture": {
+                        "key": "_1_flor"
+                    },
+                    "x": 298
+                },
+                {
+                    "type": "Image",
+                    "id": "4e494e9e-fb19-4046-aadf-15502837d8a2",
+                    "label": "_1_flor_2",
+                    "texture": {
+                        "key": "_1_flor"
+                    },
+                    "x": 596.10546875,
+                    "y": 1.09423828125
+                },
+                {
+                    "type": "Image",
+                    "id": "8cea26a9-0f30-4f01-9e78-66c652033e6b",
+                    "label": "_1_flor_3",
+                    "texture": {
+                        "key": "_1_flor"
+                    },
+                    "x": 893.7147216796875,
+                    "y": 1.15008544921875
+                },
+                {
+                    "type": "Image",
+                    "id": "a47283fb-7ff9-4246-949a-7fcbd2bb9070",
+                    "label": "_1_flor_4",
+                    "texture": {
+                        "key": "_1_flor"
+                    },
+                    "x": 1191
+                }
+            ]
+        },
+        {
+            "type": "Image",
+            "id": "d54339e4-d763-437c-8292-aba8362f2c4e",
+            "label": "play",
+            "texture": {
+                "key": "play"
+            },
+            "x": 1232,
+            "y": 47,
+            "scaleX": 0.08,
+            "scaleY": 0.08
+        },
+        {
+            "type": "Image",
+            "id": "d57e58d8-6e73-4be4-9d45-35a3c1d00179",
+            "label": "score",
+            "texture": {
+                "key": "score"
+            },
+            "x": 1082,
+            "y": 50,
+            "scaleX": 0.3,
+            "scaleY": 0.3
+        },
+        {
+            "type": "Container",
+            "id": "d69e5171-2c4e-4d66-bfa7-07c9bd1268df",
+            "label": "life",
+            "x": 64,
+            "y": 52.72999954223633,
+            "list": [
+                {
+                    "type": "Image",
+                    "id": "59c0770b-8a55-4b17-905c-b4aca56cb25b",
+                    "label": "heart",
+                    "texture": {
+                        "key": "heart"
+                    },
+                    "y": 3.270000457763672,
+                    "scaleX": 0.11,
+                    "scaleY": 0.11
+                },
+                {
+                    "type": "Image",
+                    "id": "380443bd-da00-4eb9-ae17-b27d37d257e3",
+                    "label": "heart_1",
+                    "texture": {
+                        "key": "heart"
+                    },
+                    "x": 66.97999572753906,
+                    "y": 3.8699989318847656,
+                    "scaleX": 0.11,
+                    "scaleY": 0.11
+                },
+                {
+                    "type": "Image",
+                    "id": "ab59ffab-a283-4056-b7f7-030e882eee19",
+                    "label": "heart_2",
+                    "texture": {
+                        "key": "heart"
+                    },
+                    "x": 139.16000366210938,
+                    "y": 2.8300018310546875,
+                    "scaleX": 0.11,
+                    "scaleY": 0.11
+                },
+                {
+                    "type": "Image",
+                    "id": "1229eeb0-d8ee-4556-90fd-1bdbceec0205",
+                    "label": "heart_3",
+                    "texture": {
+                        "key": "heart"
+                    },
+                    "x": 210.75,
+                    "y": 0.8899993896484375,
+                    "scaleX": 0.11,
+                    "scaleY": 0.11
+                },
+                {
+                    "type": "Image",
+                    "id": "fe0d0921-17e4-4547-bc0c-4eb3d2f580f5",
+                    "label": "heart_4",
+                    "texture": {
+                        "key": "heart"
+                    },
+                    "x": 282.239990234375,
+                    "scaleX": 0.11,
+                    "scaleY": 0.11
+                }
+            ]
+        }
+    ],
+    "plainObjects": [],
+    "meta": {
+        "app": "Phaser Editor - Scene Editor",
+        "url": "https://phaser.io/editor",
+        "contentType": "phasereditor2d.core.scene.SceneContentType",
+        "version": 5
+    }
+}

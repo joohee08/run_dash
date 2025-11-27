@@ -16,56 +16,50 @@ class settings extends Phaser.Scene {
 	/** @returns {void} */
 	editorCreate() {
 
-		// my_back
-		const my_back = this.add.image(643, 364, "my_back");
-		my_back.setInteractive(new Phaser.Geom.Rectangle(0, 0, 1920, 1080), Phaser.Geom.Rectangle.Contains);
-		my_back.scaleX = 0.67;
-		my_back.scaleY = 0.681;
-
-		// setting_btn
-		const setting_btn = this.add.image(58, 64, "setting_btn");
-		setting_btn.scaleX = 0.13;
-		setting_btn.scaleY = 0.13;
-
-		// my_btn2
-		const my_btn2 = this.add.image(129, 622, "my_btn2");
-		my_btn2.scaleX = 0.4;
-		my_btn2.scaleY = 0.4;
-
-		// my_btn3
-		const my_btn3 = this.add.image(348, 625, "my_btn3");
-		my_btn3.scaleX = 0.4;
-		my_btn3.scaleY = 0.4;
-
-		// my_btn4
-		const my_btn4 = this.add.image(564, 624, "my_btn4");
-		my_btn4.scaleX = 0.4;
-		my_btn4.scaleY = 0.4;
-
-		// pyogoni
-		const pyogoni = this.add.image(352, 336, "pyogoni");
-		pyogoni.scaleX = 0.9;
-		pyogoni.scaleY = 0.9;
-
-		// my_btn
-		const my_btn = this.add.image(966, 617, "my_btn");
-		my_btn.scaleX = 0.4;
-		my_btn.scaleY = 0.4;
-
-		// my_ques
-		const my_ques = this.add.image(1145, 619, "my_ques");
-		my_ques.scaleX = 0.1;
-		my_ques.scaleY = 0.1;
-
 		// shadow
 		const shadow = this.add.image(639, 362, "shadow");
 		shadow.scaleX = 0.67;
 		shadow.scaleY = 0.681;
 
 		// my_map
-		const my_map = this.add.image(652, 379, "my_map");
+		const my_map = this.add.image(635, 360, "my_map");
 		my_map.scaleX = 1.65;
 		my_map.scaleY = 1.6;
+
+		// my_txt1
+		const my_txt1 = this.add.image(432, 239, "my_txt1");
+		my_txt1.scaleX = 0.18;
+		my_txt1.scaleY = 0.18;
+
+		// my_prog1
+		const my_prog1 = this.add.image(647, 285, "my_prog1");
+		my_prog1.scaleX = 0.9;
+		my_prog1.scaleY = 0.9;
+
+		// my_txt2
+		const my_txt2 = this.add.image(434, 338, "my_txt2");
+		my_txt2.scaleX = 0.23;
+		my_txt2.scaleY = 0.23;
+
+		// my_prog2
+		const my_prog2 = this.add.image(647, 390, "my_prog2");
+		my_prog2.scaleX = 0.9;
+		my_prog2.scaleY = 0.9;
+
+		// my_txt3
+		const my_txt3 = this.add.image(438, 437, "my_txt3");
+		my_txt3.scaleX = 0.2;
+		my_txt3.scaleY = 0.2;
+
+		// my_color
+		const my_color = this.add.image(547, 474, "my_color");
+		my_color.scaleX = 0.2;
+		my_color.scaleY = 0.2;
+
+		// x_btn
+		const x_btn = this.add.image(979, 204, "x_btn");
+		x_btn.scaleX = 0.05;
+		x_btn.scaleY = 0.05;
 
 		this.events.emit("scene-awake");
 	}
@@ -77,6 +71,20 @@ class settings extends Phaser.Scene {
 	create() {
 
 		this.editorCreate();
+		this.setupCloseButton();
+	}
+
+	//X 버튼 닫기//
+	setupCloseButton() {
+		const btn = this.children.list.find(o => o.texture?.key === "x_btn");
+		if (!btn) return;
+
+		btn.setInteractive({ useHandCursor: true });
+
+		btn.on("pointerdown", () => {
+			this.scene.stop();
+			this.scene.resume("player_pg");
+		});
 	}
 
 	/* END-USER-CODE */
