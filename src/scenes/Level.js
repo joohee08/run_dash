@@ -160,7 +160,7 @@ class Level extends Phaser.Scene {
         this.inputBox.remove();
 
 		//등록 후 바로 시작 버튼 모드로 전환
-		this.showStartButton();
+		// this.showStartButton();
 
         this.scene.start("player_pg");
     }
