@@ -166,123 +166,141 @@ class Map1 extends Phaser.Scene {
 	create() {
 
 		this.editorCreate();
+		this.MapAlphaNoClick();
+    	this.setupMapHover();
+   	 	this.MapPointTween();
+    	this.MapLockTween();
+		this.setupBackButton();
+	}
 
-		//공통 투명 영역 클릭 못하게 처리
-		 const makeInteractive = (obj) => {
-			if (!obj) return;
+	//일반 투명 영역 방지//
+	makeInteractive(obj) {
+        if (!obj) return;
 
-			obj.setInteractive({
-				useHandCursor: true,
-				pixelPerfect: true,
-				alphaTolerance: 1
-			});
-		};
+        obj.setInteractive({
+            useHandCursor: true,
+            pixelPerfect: true,
+            alphaTolerance: 1
+        });
+    }
 
-		//공통 hover
-		 const setupHover = (obj) => {
-			if (!obj) return;
+	MapAlphaNoClick() {
+        const map_alpha_noclick = [
+            "m_1","m_2","m_3","m_4",
+            "m_5","m_6","m_7","m_8",
+            "back"
+        ];
 
-			const normalScale = { x: obj.scaleX, y: obj.scaleY };
-			const hoverScale = { x: obj.scaleX * 1.1, y: obj.scaleY * 1.1 };
+        map_alpha_noclick.forEach(key => {
+            const obj = this.children.list.find(o => o.texture?.key === key);
+            this.makeInteractive(obj);
+        });
+    }
 
-			obj.on("pointerover", () => {
-				this.tweens.add({
-					targets: obj,
-					scaleX: hoverScale.x,
-					scaleY: hoverScale.y,
-					duration: 180,
-					ease: "Sine.out"
-				});
-			});
+	//hover 애니메이션//
+	MapsetupHover(obj) {
+        if (!obj) return;
 
-			obj.on("pointerout", () => {
-				this.tweens.add({
-					targets: obj,
-					scaleX: normalScale.x,
-					scaleY: normalScale.y,
-					duration: 180,
-					ease: "Sine.out"
-				});
-			});
-		};
+        const normal = { x: obj.scaleX, y: obj.scaleY };
+        const hover = { x: obj.scaleX * 1.1, y: obj.scaleY * 1.1 };
 
-		//투명구역 노클릭
-		 const map_alpha_noclick = ["m_1", "m_2", "m_3", "m_4", "m_5", "m_6", "m_7", "m_8", "back"];
+        obj.on("pointerover", () => {
+            this.tweens.add({
+                targets: obj,
+                scaleX: hover.x,
+                scaleY: hover.y,
+                duration: 180,
+                ease: "Sine.out"
+            });
+        });
 
-			map_alpha_noclick.forEach(key => {
-			const obj = this.children.list.find(o => o.texture?.key === key);
-			makeInteractive(obj);
-		});
+        obj.on("pointerout", () => {
+            this.tweens.add({
+                targets: obj,
+                scaleX: normal.x,
+                scaleY: normal.y,
+                duration: 180,
+                ease: "Sine.out"
+            });
+        });
+    }
 
-		//맵 구역 hover
-		const map_one_hover = ["m_1", "m_2", "m_3", "m_4", "m_5", "m_6", "m_7", "m_8"];
+	setupMapHover() {
+        const hoverTargets = [
+            "m_1","m_2","m_3","m_4",
+            "m_5","m_6","m_7","m_8"
+        ];
 
-		  map_one_hover.forEach(key => {
-			const obj = this.children.list.find(o => o.texture?.key === key);
-			setupHover(obj);
-		});
+        hoverTargets.forEach(key => {
+            const obj = this.children.list.find(o => o.texture?.key === key);
+            this.MapsetupHover(obj);
+        });
+    }
 
-			// 키포인트 찾기
-			const m_point = this.children.list.find(obj => obj.texture?.key === "m_point");
-			// 둥둥 떠다니는 애니메이션, 키포인트
-			this.tweens.add({
-				targets: m_point,
-				y: m_point.y - 10,
-				duration: 800,
-				yoyo: true,
-				repeat: -1,
-				ease: "Sine.inOut"
-			});
+	//키포인트 애니메이션//
+	MapPointTween() {
+        const m_point = this.children.list.find(obj => obj.texture?.key === "m_point");
+        if (!m_point) return;
 
-			//자물쇠 찾기
-			const locks = this.children.list.filter(obj => obj.texture?.key === "m_lock");
-			//자물쇠 애니메이션
-			locks.forEach(lock => {
-				lock.setOrigin(0.5);
+        this.tweens.add({
+            targets: m_point,
+            y: m_point.y - 10,
+            duration: 800,
+            yoyo: true,
+            repeat: -1,
+            ease: "Sine.inOut"
+        });
+    }
 
-				this.tweens.chain({
+	//자물쇠 애니메이션//
+	MapLockTween() {
+        const locks = this.children.list.filter(obj => obj.texture?.key === "m_lock");
+        if (!locks.length) return;
 
-					targets: lock,
+        locks.forEach(lock => {
+            lock.setOrigin(0.5);
 
-					tweens: [
-						// 커지기
-						{
-							scale: 0.13,
-							duration: 200,
-							ease: "Sine.out"
-						},
+            this.tweens.chain({
+                targets: lock,
+                tweens: [
+                    { scale: 0.13, duration: 200, ease: "Sine.out" },
+                    { angle: -15, duration: 200, yoyo: true, repeat: 1, ease: "Sine.inOut" },
+                    { scale: 0.1, angle: 0, duration: 200, ease: "Sine.inOut" }
+                ],
+                repeat: -1
+            });
+        });
+    }
 
-						// 빠르게 좌우 흔들리기
-						{
-							angle: -15,
-							duration: 200,
-							yoyo: true,
-							repeat: 1,  // 빠르게 흔들흔들
-							ease: "Sine.inOut"
-						},
+	//뒤로가기 버튼//
+	setupBackButton() {
+        const backBtn = this.children.list.find(obj => obj.texture?.key === "back");
+        if (!backBtn) return;
 
-						// 다시 원래 크기로
-						{
-							scale: 0.1,
-							angle: 0,
-							duration: 200,
-							ease: "Sine.inOut"
-						}
-					],
+		setInteractiveButton(backBtn);
+        const defaultScale = 0.25;
+        backBtn.setInteractive({ useHandCursor: true });
 
-					repeat: -1 // 전체 사이클 반복
-				});
-			});
+        backBtn.on("pointerdown", () => {
+            this.tweens.add({
+                targets: backBtn,
+                scale: defaultScale * 0.85,
+                duration: 80
+            });
+        });
 
-			//뒤로가기
-			 const backBtn = this.children.list.find(o => o.texture?.key === "back");
-				if (backBtn) {
-					backBtn.on("pointerup", () => {
-						this.scene.start("player_pg");
-					});
-				}
+        backBtn.on("pointerup", () => {
+            this.tweens.add({
+                targets: backBtn,
+                scale: defaultScale,
+                duration: 100,
+                ease: "Bounce.easeOut"
+            });
+            this.scene.start("player_pg");
+        });
 
-		}
+        backBtn.on("pointerout", () => backBtn.setScale(defaultScale));
+    }
 
 
 

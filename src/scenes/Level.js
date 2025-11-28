@@ -48,7 +48,7 @@ class Level extends Phaser.Scene {
 
 		 if (savedName) {
 			// 닉네임 이미 있음 -> 시작 버튼만 보여주기
-			this.showStartButton();
+			this.LevelshowStartButton();
 		} else {
 			// 최초 실행 -> 인풋박스 + 등록 버튼 활성화
 			this.LevelcreateInputBox();
@@ -60,7 +60,7 @@ class Level extends Phaser.Scene {
 			// 시작하기 버튼 숨기기
 			this.f_btn_1.setVisible(false);
 		}
-	}
+	 }
 
 	//제목 타이틀 트윈 함수//
 	LevelTitleTween() {
@@ -80,27 +80,28 @@ class Level extends Phaser.Scene {
 
 	//닉네임 입력창 함수//
 	LevelcreateInputBox() {
-		this.inputBox = document.createElement("input");
-		this.inputBox.placeholder = "닉네임을 입력하세요";
+		 this.inputBox = this.add.dom(639, 466).createFromHTML(`
+        <input 
+            id="nicknameInput"
+            type="text" 
+            placeholder="닉네임을 입력하세요"
+            style="
+                width: 320px;
+                height: 45px;
+                font-size: 18px;
+                padding: 5px 10px;
+                border-radius: 10px;
+                border: 2px solid #3ca84c;
+                box-sizing: border-box;
+            "
+        >
+    `);
 
-		Object.assign(this.inputBox.style, {
-			position: "fixed",
-			width: "320px",
-			height: "45px",
-			fontSize: "18px",
-			padding: "5px 10px",
-			borderRadius: "10px",
-			border: "2px solid #3ca84c",
-			background: "white",
-			color: "#333",
-			left: "50%",
-			top: "566px",
-			transform: "translateX(-50%)",
-			zIndex: "10",
-		});
-		document.getElementById("game-container").appendChild(this.inputBox);
+    this.inputBox.setOrigin(0.5);
 
-		this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.inputBox.remove());
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+        this.inputBox.destroy();
+    });
 	}
 
 	//등록하기 버튼 클릭 함수//
@@ -143,7 +144,8 @@ class Level extends Phaser.Scene {
 	 LevelhandleSubmit() {
 
 		// 닉네임 입력 확인
-        const nickname = this.inputBox?.value?.trim();
+		const input = this.inputBox.getChildByID("nicknameInput");
+        const nickname = input?.value?.trim();
 
         if (!nickname) {
             alert("닉네임을 입력해주세요!");
@@ -158,17 +160,19 @@ class Level extends Phaser.Scene {
         this.inputBox.remove();
 
 		//등록 후 바로 시작 버튼 모드로 전환
-		this.showStartButton();
+		this.LevelshowStartButton();
 
         this.scene.start("player_pg");
     }
 
 
-	//시작버튼 함수
-	showStartButton() {
+	//시작버튼 함수//
+	LevelshowStartButton() {
 
 		// 시작 버튼(f_btn_1) 표시
 		this.f_btn_1.setVisible(true);
+
+		setInteractiveButton(this.f_btn_1);
 
 		const btn1 = this.f_btn_1;
 		const defaultScale = 0.5;
@@ -200,7 +204,6 @@ class Level extends Phaser.Scene {
 		// 등록 버튼(f_btn_2) 숨기기
 		if (this.f_btn_2) this.f_btn_2.setVisible(false);
 	}
-
 
 	/* END-USER-CODE */
 }

@@ -144,18 +144,6 @@
         },
         {
             "type": "Image",
-            "id": "6d6fb9f0-9ddf-4926-b1e0-e91df9bf0e37",
-            "label": "cha_ok",
-            "texture": {
-                "key": "cha_ok"
-            },
-            "x": 896,
-            "y": 427,
-            "scaleX": 0.3,
-            "scaleY": 0.3
-        },
-        {
-            "type": "Image",
             "id": "dbfcf074-282f-43db-b19b-8986709e7bf8",
             "label": "setting_btn",
             "texture": {
@@ -177,6 +165,16 @@
             "y": 36,
             "scaleX": 0.25,
             "scaleY": 0.25
+        },
+        {
+            "type": "Image",
+            "id": "6339f755-21f6-4bfb-9b73-53235fcd6319",
+            "label": "cha_ok",
+            "texture": {
+                "key": "cha_ok"
+            },
+            "x": 878,
+            "y": 458
         }
     ],
     "plainObjects": [],
