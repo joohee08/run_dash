@@ -94,17 +94,32 @@ class Profile extends Phaser.Scene {
 	}
 
 	startCreate() {
-
-		//기본 이미지 크기
 		const px = 645;
-		const py = 200;
+    	const py = 200;
 
+		this.createProfileImage(px, py);
+
+		this.createFileInput(px, py);
+		this.setupFileInputChange(px, py);
+		this.loadSavedProfileImage();
+
+		this.createLoadImageButton(px, py);
+		this.createDefaultImageButton(px, py);
+
+		this.setupBadgeButtons();
+		this.setupNameInput(px, py);
+		this.setupNameSaveButton(px, py);
+		this.setupCloseButton();
+	}
+
+	//프로필 기본 이미지 생성//
+	createProfileImage(px, py) {
 		this.profileImage = this.add.image(px, py, "basic_profile")
 			.setScale(0.3)
 			.setDepth(200);
 
-		//원형 마스크
-		const maskRadius = 70; // 원 크기 
+		// 원형 마스크
+		const maskRadius = 70;
 		const maskgraphics = this.make.graphics({}, false);
 
 		maskgraphics.fillStyle(0xffffff);
@@ -113,259 +128,206 @@ class Profile extends Phaser.Scene {
 		maskgraphics.closePath();
 		maskgraphics.fill();
 
-		const mask = maskgraphics.createGeometryMask();
+		this.profileImage.setMask(maskgraphics.createGeometryMask());
+	}
 
-		this.profileImage.setMask(mask);
+	//저장된 프로필 불러오기//
+	loadSavedProfileImage() {
+		const saved = localStorage.getItem("user_profile_img");
+		if (!saved) return;
 
-		this.tempImage = null;
+		const savedImg = new Image();
+		savedImg.src = saved;
 
-		//파일 생성
+		savedImg.onload = () => {
+			if (this.textures.exists("user_profile"))
+				this.textures.remove("user_profile");
+
+			this.textures.addImage("user_profile", savedImg);
+
+			const scale = 140 / Math.min(savedImg.width, savedImg.height);
+
+			this.profileImage
+				.setTexture("user_profile")
+				.setScale(scale);
+		};
+	}
+
+	//파일 input 생성//
+	createFileInput() {
 		this.fileInput = document.createElement("input");
 		this.fileInput.type = "file";
 		this.fileInput.accept = "image/*";
 		this.fileInput.style.display = "none";
 		document.body.appendChild(this.fileInput);
+	}
 
-		//선택된 파일 읽기
+
+	//파일 선택 후 이미지 적용//
+	setupFileInputChange(px, py) {
+
 		this.fileInput.addEventListener("change", (e) => {
 			const file = e.target.files[0];
 			if (!file) return;
 
 			const reader = new FileReader();
 			reader.onload = (event) => {
-				this.tempImage = event.target.result;
 
-				//이미지 바로 저장
-				localStorage.setItem("user_profile_img", this.tempImage);
+				const imgBase64 = event.target.result;
+				localStorage.setItem("user_profile_img", imgBase64);
 
-				//base64 → HTML 이미지 → Phaser 텍스처 방식
 				const img = new Image();
-				img.src = this.tempImage;
+				img.src = imgBase64;
 
 				img.onload = () => {
-
-					// 기존 텍스처 삭제
 					if (this.textures.exists("preview_profile"))
 						this.textures.remove("preview_profile");
 
-					//진짜 텍스처 생성
 					this.textures.addImage("preview_profile", img);
-					const targetRadius = 70;    // 원형 마스크 반지름
-					const targetSize = targetRadius * 2; // 목표 직경(=크기)
 
-						const imgWidth = img.width;
-						const imgHeight = img.height;
+					const scale = 140 / Math.min(img.width, img.height);
 
-						// cover 방식 스케일 계산
-						const scale = targetSize / Math.min(imgWidth, imgHeight);
-
-						// 최종 적용
-						this.profileImage
-							.setTexture("preview_profile")
-							.setScale(scale);
-					};
-   			 };
-
-    		reader.readAsDataURL(file);
-		});
-
-		const saved = localStorage.getItem("user_profile_img");
-
-		//자동 저장 코드
-		if (saved) {
-			const savedImg = new Image();
-			savedImg.src = saved;
-
-			savedImg.onload = () => {
-
-				// 기존 텍스처 삭제
-				if (this.textures.exists("user_profile"))
-					this.textures.remove("user_profile");
-
-				// 텍스처 생성
-				this.textures.addImage("user_profile", savedImg);
-
-				const targetRadius = 70;
-				const targetSize = targetRadius * 2;
-
-				const imgWidth = savedImg.width;
-				const imgHeight = savedImg.height;
-
-				// cover 방식 스케일 계산
-				const scale = targetSize / Math.min(imgWidth, imgHeight);
-
-				// 적용
-				this.profileImage
-					.setTexture("user_profile")
-					.setScale(scale);
+					this.profileImage
+						.setTexture("preview_profile")
+						.setScale(scale);
+				};
 			};
-		}
 
-		//이미지 버튼 불러오기
-		const loadBtn = this.add.text(px -150, py + 90, "이미지 불러오기", {
+			reader.readAsDataURL(file);
+		});
+	}
+
+	//이미지 불러오기 버튼//
+	createLoadImageButton(px, py) {
+		const btn = this.add.text(px - 150, py + 90, "이미지 불러오기", {
 			fontFamily: "Pretendard",
 			fontSize: "15px",
 			backgroundColor: "#fff",
 			color: "#000",
 			padding: { left: 15, right: 15, top: 8, bottom: 8 }
-		}).setInteractive({ useHandCursor: true });
+		})
+			.setInteractive({ useHandCursor: true });
 
-		loadBtn.on("pointerdown", () => {
-			this.fileInput.click();  // HTML input 열기
-		});
+		btn.on("pointerdown", () => this.fileInput.click());
+	}
 
-		const defaultBtn = this.add.text(px + 10, py + 90, "기본 이미지로", {
+	//기본 이미지 버튼//
+	createDefaultImageButton(px, py) {
+		const btn = this.add.text(px + 10, py + 90, "기본 이미지로", {
 			fontFamily: "Pretendard",
 			fontSize: "15px",
 			backgroundColor: "#000000ff",
-			color: "#ffffffff",
+			color: "#ffffff",
 			padding: { left: 15, right: 15, top: 8, bottom: 8 }
-		}).setInteractive({ useHandCursor: true });
+		})
+			.setInteractive({ useHandCursor: true });
 
-		defaultBtn.on("pointerdown", () => {
-
-			//localStorage 초기화 (기본 이미지로 교체)
+		btn.on("pointerdown", () => {
 			localStorage.removeItem("user_profile_img");
 
-			//기본 이미지로 되돌림
 			const img = this.textures.get("basic_profile").getSourceImage();
-
-			const imgWidth = img.width;
-			const imgHeight = img.height;
-
-			const targetRadius = 70;
-			const targetSize = targetRadius * 2;
-
-			const scale = targetSize / Math.min(imgWidth, imgHeight);
+			const scale = 140 / Math.min(img.width, img.height);
 
 			this.profileImage
 				.setTexture("basic_profile")
 				.setScale(scale);
 		});
+	}
 
-		//캐릭터 뱃지 버튼
-		const batchKeys = [
-			"pachang_batch",
-			"brory_batch",
-			"conky_batch",
-			"tomang_batch",
-			"pote_batch",
-			"pyogoni_batch"
-		];
+	//캐릭터 뱃지 버튼//
+	setupBadgeButtons() {
+		const keys = ["pachang_batch", "brory_batch", "conky_batch", "tomang_batch", "pote_batch", "pyogoni_batch"];
 
-		batchKeys.forEach(key => {
+		keys.forEach(key => {
 			const sprite = this.children.list.find(o => o.texture?.key === key);
+			if (!sprite) return;
 
-			if (sprite) {
-				sprite.setInteractive({ useHandCursor: true });
+			setInteractiveButton(sprite);
+			sprite.setInteractive({ useHandCursor: true });
 
-				sprite.on("pointerdown", () => {
-
-				const texture = this.textures.get(key);
-				const source = texture.getSourceImage();
-
-				// 텍스처 캔버스 그리기
+			sprite.on("pointerdown", () => {
+				const source = this.textures.get(key).getSourceImage();
 				const canvas = document.createElement("canvas");
+
 				canvas.width = source.width;
 				canvas.height = source.height;
+				canvas.getContext("2d").drawImage(source, 0, 0);
 
-				const ctx = canvas.getContext("2d");
-				ctx.drawImage(source, 0, 0);
-
-				// base64 변환
 				const base64 = canvas.toDataURL("image/png");
 
-				// localStorage 저장
 				localStorage.setItem("user_profile_img", base64);
 
-				// 프로필 이미지 교체
-				const targetRadius = 70;
-				const targetSize = targetRadius * 2;
-				const scale = targetSize / Math.min(source.width, source.height);
+				const scale = 140 / Math.min(source.width, source.height);
 
 				this.profileImage
 					.setTexture(key)
 					.setScale(scale);
-				});
-			   }
 			});
-
-			//첫화면에서 가져온 닉네임 변경하기
-			//원래 닉네임 불러오기
-			let nickname = localStorage.getItem("user_nickname") || "게스트";
-
-			//닉네임 입력창 생성
-			this.nameInput = document.createElement("input");
-			this.nameInput.type = "text";
-			this.nameInput.value = nickname;
-			this.nameInput.placeholder = "닉네임을 입력하세요";
-			
-
-			Object.assign(this.nameInput.style, {
-				position: "absolute",
-				left: (px + 180) + "px",
-				top: (py + 270) + "px",
-				fontSize: "20px",
-				padding: "6px 10px",
-				border: "1px solid #ccc",
-				borderRadius: "6px",
-				zIndex: 1000
-			});
-
-			document.body.appendChild(this.nameInput);
-
-			const saveNameBtn = this.add.text(px - 55, py + 230, "변경하기", {
-				fontFamily: "Pretendard",
-				fontSize: "16px",
-				backgroundColor: "#000",
-				color: "#fff",
-				padding: { left: 10, right: 10, top: 6, bottom: 6 }
-			})
-			.setInteractive({ useHandCursor: true });
-
-			saveNameBtn.on("pointerdown", () => {
-				
-				const newName = this.nameInput.value.trim();
-
-				if (newName.length === 0) return;
-
-				// 변경사항 업데이트
-				localStorage.setItem("user_nickname", newName);
-
-				this.registry.set("nickname", newName);
-
-				this.nameInput.value = newName;
-
-				alert("닉네임이 변경되었습니다!");
-
-				console.log("닉네임 변경됨:", newName);
-			});
-
-			this.events.once("shutdown", () => {
-			if (this.nameInput) this.nameInput.remove();
-			});
-
-		//x 버튼 닫기
-		const x_btn = this.children.list.find(obj => obj.texture?.key === "x_btn");
-
-		x_btn.setInteractive({ useHandCursor: true });
-		x_btn.on("pointerdown", () => {
-		this.scene.stop();          // 팝업 닫기
-		this.scene.resume("player_pg"); // 원래 씬 다시 활성화
-	});
-
-
-
-
-
-
-
-
-	
+		});
 	}
 
+	//닉네임 입력창//
+	setupNameInput(px, py) {
+		this.nameDom = this.add.dom(px - 10, py + 190).createFromHTML(`
+			<input id="profileNameInput"
+				type="text"
+				style="
+					width: 200px;
+					font-size: 20px;
+					padding: 6px 10px;
+					border: 1px solid #ccc;
+					border-radius: 6px;
+				"
+			>
+		`);
+		this.nameDom.setOrigin(0.5);
 
+		const nickname = localStorage.getItem("user_nickname") || "게스트";
+		this.nameDom.getChildByID("profileNameInput").value = nickname;
+
+		this.events.once("shutdown", () => this.nameDom?.destroy());
+	}
+
+	//닉네임 저장 버튼//
+	setupNameSaveButton(px, py) {
+		const btn = this.add.text(px - 45, py + 230, "변경하기", {
+			fontFamily: "Pretendard",
+			fontSize: "16px",
+			backgroundColor: "#000",
+			color: "#fff",
+			padding: { left: 10, right: 10, top: 6, bottom: 6 }
+		})
+			.setInteractive({ useHandCursor: true });
+
+		btn.on("pointerdown", () => {
+			const newName = this.nameDom.getChildByID("profileNameInput").value.trim();
+			if (!newName) return;
+
+			localStorage.setItem("user_nickname", newName);
+			this.registry.set("nickname", newName);
+
+			alert("닉네임이 변경되었습니다!");
+		});
+	}
+
+	//X 버튼 닫기//
+	setupCloseButton() {
+		const btn = this.children.list.find(o => o.texture?.key === "x_btn");
+		if (!btn) return;
+
+		btn.setInteractive({ useHandCursor: true });
+
+		btn.on("pointerdown", () => {
+			this.scene.stop();
+			this.scene.resume("player_pg");
+		});
+	}
 }
+
+
+
+
+
 
 
 	/* END-USER-CODE */

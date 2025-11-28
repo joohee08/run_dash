@@ -72,11 +72,6 @@ class Charac_selec extends Phaser.Scene {
 		cha_arrow_1.scaleY = 0.3;
 		cha_arrow_1.flipX = true;
 
-		// cha_ok
-		const cha_ok = this.add.image(896, 427, "cha_ok");
-		cha_ok.scaleX = 0.3;
-		cha_ok.scaleY = 0.3;
-
 		// setting_btn
 		const setting_btn = this.add.image(1232, 47, "setting_btn");
 		setting_btn.scaleX = 0.08;
@@ -86,6 +81,9 @@ class Charac_selec extends Phaser.Scene {
 		const back = this.add.image(46, 36, "back");
 		back.scaleX = 0.25;
 		back.scaleY = 0.25;
+
+		// cha_ok
+		this.add.image(878, 458, "cha_ok");
 
 		this.events.emit("scene-awake");
 	}
@@ -117,231 +115,243 @@ class Charac_selec extends Phaser.Scene {
 
 	create() {
 		this.editorCreate();
-		this.isFirstSelect = true;
-
-		 const makeInteractive = (obj) => {
-			if (!obj) return;
-
-			obj.setInteractive({
-				useHandCursor: true,
-				pixelPerfect: true,
-				alphaTolerance: 1
-			});
-		};
-
-		const savedKey = localStorage.getItem("selectedCharacter") || "pachang";
-
-		//캐릭터 배열
-		this.characters = [
-			this.children.list.find(obj => obj.texture?.key === "pachang"),
-			this.children.list.find(obj => obj.texture?.key === "brory"),
-			this.children.list.find(obj => obj.texture?.key === "conky"),
-			this.children.list.find(obj => obj.texture?.key === "tomang"),
-			this.children.list.find(obj => obj.texture?.key === "pote"),
-			this.children.list.find(obj => obj.texture?.key === "pyogoni")
-		];
-
-		//바구니 객체
-		this.basket = this.children.list.find(obj => obj.texture?.key === "cha_basket");
-
-		//현재 선택
-		this.currentIndex = this.characters.findIndex(c => c.texture.key === savedKey);
-
-		// 만약 못찾으면 기본값
-		if (this.currentIndex === -1) this.currentIndex = 0;
-
-		//화살표 
-		this.arrowRight = this.children.list.find(obj => obj.texture?.key === "cha_arrow" && !obj.flipX);
-		this.arrowLeft = this.children.list.find(obj => obj.texture?.key === "cha_arrow" && obj.flipX);
-
-		//화살표 클릭 이벤트
-		this.arrowLeft.setInteractive({ useHandCursor: true });
-		this.arrowRight.setInteractive({ useHandCursor: true });
-
-		//왼쪽
-		this.arrowLeft.on("pointerdown", () => {
-			this.currentIndex = (this.currentIndex - 1 + this.characters.length) % this.characters.length;
-			this.updateSelection();
-		});
-
-		//오른쪽
-		this.arrowRight.on("pointerdown", () => {
-			this.currentIndex = (this.currentIndex + 1) % this.characters.length;
-			this.updateSelection();
-		});
-
-		//캐릭터 표시 객체
-		this.cha_selrec = this.children.list.find(obj => obj.texture?.key === "cha_selrec");
-
-		//바구니 표시용 캐릭터
-		this.selectedCharacterDisplay = this.add.sprite(
-			this.basket.x, this.basket.y - 150, // 바구니 바로 위
-			this.characters[this.currentIndex].texture.key
-		);
-
-		 this.selectedCharacterDisplay.setScale(0.7); // 바구니 안 크기 조정
- 		 this.selectedCharacterDisplay.setDepth(10);  // 항상 위에 보이게
-
-		//기본 캐릭터 표시
-		// 흔들림 방지 핵심
-		this.selectedCharacterDisplay.setOrigin(0.5, 0.5);
-
-		// 모든 캐릭터 애니메이션 생성
-		for (const key in this.charSheets) {
-			const animKey = `${key}_move`;
-
-			if (!this.anims.exists(animKey)) {
-				this.anims.create({
-					key: animKey,
-					frames: this.anims.generateFrameNumbers(`${key}_anim`),
-					frameRate: 23,
-					repeat: -1
-				});
-			}
-		}
-
-		// 캐릭터 설명 텍스트 추가
-		this.charDescription = this.add.text(
-			this.basket.x + 130,       // 캐릭터 오른쪽 위치
-			this.basket.y - 320,
-			"",
-			{
-				fontFamily: "Pretendard",
-				fontSize: "25px",
-				color: "#ffffff",
-				align: "left",
-				stroke: "#000000",
-				strokeThickness: 4
-			}
-		);
-		this.charDescription.setDepth(20);
-
-		// 캐릭터 선택후 확인 버튼 클릭시
-		this.okButton = this.children.list.find(obj => obj.texture?.key === "cha_ok");
-		this.okButton.setInteractive({ useHandCursor: true });
-
-		// 클릭 시 player_pg로 이동
-		this.okButton.on("pointerdown", () => {
-
-			// 현재 선택된 캐릭터 key
-			const selectedKey = this.characters[this.currentIndex].texture.key;
-
-			// player_pg로 이동하면서 선택 캐릭터 전달
-			localStorage.setItem("selectedCharacter", selectedKey);
-			this.scene.start("player_pg", { selected: selectedKey });
-		});
-
-		//뒤로가기
-			const backBtn = this.children.list.find(o => o.texture?.key === "back");
-			if (backBtn) {
-				makeInteractive(backBtn); 
-
-				backBtn.on("pointerup", () => {
-					this.scene.start("player_pg");
-				});
-
-			this.updateSelection();
-		}
+		this.setupCharacterArray();
+    	this.setupArrows();
+    	this.setupSelectedDisplay();
+    	this.setupCharDescription();
+    	this.setupOkButton();
+    	this.setupBackButton();
+    	this.updateSelection();
 	}
 
-	updateSelection() {
-		const selectedChar = this.characters[this.currentIndex];
-		const charKey = selectedChar.texture.key;
 
-		// 선택 사각형 이동
-		if (selectedChar && this.cha_selrec) {
+	//캐릭터 배열 및 초기 인덱스//
+	setupCharacterArray() {
+        const savedKey = localStorage.getItem("selectedCharacter") || "pachang";
 
-			// 첫 실행일 때는 Tween 없이 즉시 이동
-			if (this.isFirstSelect) {
-				this.cha_selrec.x = selectedChar.x;
-				this.isFirstSelect = false;
-			} else {
-				// 그 뒤부터는 애니메이션 이동
-				this.tweens.add({
-					targets: this.cha_selrec,
-					x: selectedChar.x,
-					duration: 200,
-					ease: "Sine.easeOut"
-				});
-			}
-		}
+        this.characters = [
+            this.children.list.find(o => o.texture?.key === "pachang"),
+            this.children.list.find(o => o.texture?.key === "brory"),
+            this.children.list.find(o => o.texture?.key === "conky"),
+            this.children.list.find(o => o.texture?.key === "tomang"),
+            this.children.list.find(o => o.texture?.key === "pote"),
+            this.children.list.find(o => o.texture?.key === "pyogoni")
+        ];
 
-		// 텍스처가 다른 캐릭터로 전환될 때만 변경
-		if (this.selectedCharacterDisplay.texture.key !== charKey) {
-			this.selectedCharacterDisplay.setTexture(charKey);
+        this.basket = this.children.list.find(o => o.texture?.key === "cha_basket");
 
-			let newScale = 0.7;
-			if (["tomang", "pote"].includes(charKey)) {
-				newScale = 0.6;
-			}
-			this.selectedCharacterDisplay.setScale(newScale);
-		}
+        this.currentIndex = this.characters.findIndex(c => c.texture.key === savedKey);
+        if (this.currentIndex === -1) this.currentIndex = 0;
+    }
 
-		// 애니메이션 재생 (중복 재생 방지)
-		const animKey = `${charKey}_move`;
+	//화살표 설정//
+	 setupArrows() {
+        this.arrowRight = this.children.list.find(o => o.texture?.key === "cha_arrow" && !o.flipX);
+        this.arrowLeft = this.children.list.find(o => o.texture?.key === "cha_arrow" && o.flipX);
 
-		if (this.anims.exists(animKey)) {
-			if (this.selectedCharacterDisplay.anims.currentAnim?.key !== animKey) {
-				this.selectedCharacterDisplay.play(animKey, true);
-			}
-		} else {
-			this.selectedCharacterDisplay.anims.stop();
-		}
+		setInteractiveButton(this.arrowLeft);
+        this.arrowLeft.setInteractive({ useHandCursor: true });
 
-		// 캐릭터 설명 변경
-		const descriptions = {
-		pachang: 
-			`파쨩(Pachang)
-			“요리조리 피하는 파쨩”
-			• 냄새로 바이러스 디버프 제거
-			• 피로 회복 버프
-			• 파워러시 모드 발동
-			• 매운 향기 폭발!`,
+		setInteractiveButton(this.arrowRight);
+        this.arrowRight.setInteractive({ useHandCursor: true });
 
-		brory:
-		   `브로리(Brory)
-			“브로콜리Bro” 
-			• 힐 스킬: 브로콜리 브레스 
-			• 항산화 보호막 생성! 
-			• 턴마다 HP 5% 
-			• 회복 감기 디버프 면역!`,
+        this.arrowLeft.on("pointerdown", () => {
+            this.currentIndex = (this.currentIndex - 1 + this.characters.length) % this.characters.length;
+            this.updateSelection();
+        });
 
-		conky: 
-			`콘키(Conky) 
-			“Cheeky콘” 
-			• 옥수수 에너지 부스트 
-			• 콘바디 강화 
-			• 황금빛 시선 
-			• 스위트 러시`,
+        this.arrowRight.on("pointerdown", () => {
+            this.currentIndex = (this.currentIndex + 1) % this.characters.length;
+            this.updateSelection();
+        });
+    }
 
-		tomang:
-			`토맹(Tomang) 
-			“토마토 + 멍” = 멍청하지만 귀여운” 
-			• 비타민 파워 업!
-			• 리코펜 보호막 생성
-			• 토마토 정화 필드 
-			• 신선 쿨다운 패시브`,
+	//표시 캐릭터 스프라이트 생성//
+	setupSelectedDisplay() {
+        const firstKey = this.characters[this.currentIndex].texture.key;
 
-		pote: 
-			`포테(Pote) 
-			“포테토남” 
-			• 포테 에너지 부스트
-			• 비타민 힐링 
-			• 감자 보호막 
-			• 심근 안정 패시브`,
+        this.selectedCharacterDisplay = this.add.sprite(
+            this.basket.x,
+            this.basket.y - 150,
+            firstKey
+        );
 
-		pyogoni: 
-			`표고니(Pyogoni) 
-			“표고 + 귀요미형 어미 ‘니’,"
-			 버섯계 대표 귀요미
-			• 버섯 보호막
-			• 표고 에너지 재생 
-			• 촉촉 방패막이 
-			• 항산화 버프`
-		};
+        this.selectedCharacterDisplay.setScale(0.7);
+        this.selectedCharacterDisplay.setDepth(10);
+        this.selectedCharacterDisplay.setOrigin(0.5);
 
-		this.charDescription.setText(descriptions[charKey]);
-	}
+        // 애니메이션 생성
+        for (const key in this.charSheets) {
+            const animKey = `${key}_move`;
+
+            if (!this.anims.exists(animKey)) {
+                this.anims.create({
+                    key: animKey,
+                    frames: this.anims.generateFrameNumbers(`${key}_anim`),
+                    frameRate: 23,
+                    repeat: -1
+                });
+            }
+        }
+
+        this.cha_selrec = this.children.list.find(o => o.texture?.key === "cha_selrec");
+    }
+
+	//캐릭터 설명 텍스트//
+	setupCharDescription() {
+        this.charDescription = this.add.text(
+            this.basket.x + 130,
+            this.basket.y - 320,
+            "",
+            {
+                fontFamily: "Pretendard",
+                fontSize: "25px",
+                color: "#ffffff",
+                stroke: "#000000",
+                strokeThickness: 4
+            }
+        );
+        this.charDescription.setDepth(20);
+
+        this.descriptions = {
+            pachang:
+                `파쨩(Pachang)
+				“요리조리 피하는 파쨩”
+				• 냄새로 디버프 제거
+				• 피로 회복 버프
+				• 파워러시 발동
+				• 매운 향기 폭발!`,
+
+			brory:
+				`브로리(Brory)
+				“브로콜리Bro”
+				• 힐 스킬
+				• 항산화 보호막
+				• 매턴 HP 5% 회복
+				• 감기 면역!`,
+
+			conky:
+				`콘키(Conky)
+				“Cheeky콘”
+				• 에너지 부스트
+				• 콘바디 강화
+				• 황금빛 시선
+				• 스위트 러시`,
+
+			tomang:
+				`토맹(Tomang)
+				“토마토 멍청이”
+				• 비타민 파워
+				• 리코펜 보호막
+				• 정화 필드
+				• 쿨다운 패시브`,
+
+			pote:
+				`포테(Pote)
+				“포테토남”
+				• 에너지 부스트
+				• 비타민 힐
+				• 감자 보호막
+				• 안정 패시브`,
+
+			pyogoni:
+				`표고니(Pyogoni)
+				“표고 + 귀요미”
+				• 버섯 보호막
+				• 에너지 재생
+				• 촉촉 방패
+				• 항산화 버프`
+			};
+    }
+
+	// OK 버튼//
+	 setupOkButton() {
+		const okButton = this.children.list.find(obj => obj.texture?.key === "cha_ok");
+
+		if (!okButton) return;
+
+		//setInteractiveButton(okButton);
+
+        okButton.setInteractive({ useHandCursor: true });
+
+        okButton.on("pointerdown", () => {
+            const selectedKey = this.characters[this.currentIndex].texture.key;
+            localStorage.setItem("selectedCharacter", selectedKey);
+            this.scene.start("player_pg", { selected: selectedKey });
+        });
+    }
+
+
+	//캐릭터 변경 시 업데이트//
+	 updateSelection() {
+        const selectedChar = this.characters[this.currentIndex];
+        const charKey = selectedChar.texture.key;
+
+        if (this.isFirstSelect) {
+            this.cha_selrec.x = selectedChar.x;
+            this.isFirstSelect = false;
+        } else {
+            this.tweens.add({
+                targets: this.cha_selrec,
+                x: selectedChar.x,
+                duration: 200,
+                ease: "Sine.out"
+            });
+        }
+
+        if (this.selectedCharacterDisplay.texture.key !== charKey) {
+            this.selectedCharacterDisplay.setTexture(charKey);
+
+            let newScale = 0.7;
+            if (["tomang", "pote"].includes(charKey)) {
+                newScale = 0.6;
+            }
+            this.selectedCharacterDisplay.setScale(newScale);
+        }
+
+        const animKey = `${charKey}_move`;
+
+        if (this.anims.exists(animKey)) {
+            if (this.selectedCharacterDisplay.anims.currentAnim?.key !== animKey) {
+                this.selectedCharacterDisplay.play(animKey, true);
+            }
+        }
+
+        this.charDescription.setText(this.descriptions[charKey]);
+    }
+
+	//뒤로가기 버튼//
+	setupBackButton() {
+        const backBtn = this.children.list.find(obj => obj.texture?.key === "back");
+        if (!backBtn) return;
+
+		setInteractiveButton(backBtn);
+        const defaultScale = 0.25;
+        backBtn.setInteractive({ useHandCursor: true });
+
+        backBtn.on("pointerdown", () => {
+            this.tweens.add({
+                targets: backBtn,
+                scale: defaultScale * 0.85,
+                duration: 80
+            });
+        });
+
+        backBtn.on("pointerup", () => {
+            this.tweens.add({
+                targets: backBtn,
+                scale: defaultScale,
+                duration: 100,
+                ease: "Bounce.easeOut"
+            });
+            this.scene.start("player_pg");
+        });
+
+        backBtn.on("pointerout", () => backBtn.setScale(defaultScale));
+    }
+
+
+
 
 	/* END-USER-CODE */
 }

@@ -97,18 +97,6 @@
             "scaleY": 0.1
         },
         {
-            "type": "Image",
-            "id": "4423d570-2cb7-4930-9001-faf7da4a7415",
-            "label": "my_btn",
-            "texture": {
-                "key": "my_btn"
-            },
-            "x": 974,
-            "y": 612,
-            "scaleX": 0.4,
-            "scaleY": 0.4
-        },
-        {
             "type": "Container",
             "id": "e0bef33a-9efe-4797-8c3f-8b64983ffcfa",
             "label": "container_1",
@@ -189,18 +177,6 @@
         },
         {
             "type": "Image",
-            "id": "d1051637-90d7-4c90-a96a-839cfde2547b",
-            "label": "my_rankbtn",
-            "texture": {
-                "key": "my_rankbtn"
-            },
-            "x": 970,
-            "y": 149,
-            "scaleX": 0.55,
-            "scaleY": 0.55
-        },
-        {
-            "type": "Image",
             "id": "d7de95e5-317e-4499-b639-5f903e0014c6",
             "label": "back",
             "texture": {
@@ -210,6 +186,30 @@
             "y": 35,
             "scaleX": 0.25,
             "scaleY": 0.25
+        },
+        {
+            "type": "Image",
+            "id": "f847388c-be7b-4747-99c6-9ee8292192b7",
+            "label": "my_rankbtn_1",
+            "texture": {
+                "key": "my_rankbtn_1"
+            },
+            "x": 970,
+            "y": 149,
+            "scaleX": 0.55,
+            "scaleY": 0.55
+        },
+        {
+            "type": "Image",
+            "id": "859ffb0d-8e05-4dfa-9a74-9800cd21c253",
+            "label": "my_btn_1",
+            "texture": {
+                "key": "my_btn_1"
+            },
+            "x": 974,
+            "y": 612,
+            "scaleX": 0.4,
+            "scaleY": 0.4
         }
     ],
     "plainObjects": [],

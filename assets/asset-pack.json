@@ -263,9 +263,9 @@
                 "key": "my_board"
             },
             {
-                "url": "assets/my_btn.png",
+                "url": "assets/mypage/my_btn.png",
                 "type": "image",
-                "key": "my_btn"
+                "key": "my_btn_1"
             },
             {
                 "url": "assets/mypage/my_btn2.png",
@@ -313,9 +313,9 @@
                 "key": "my_ques"
             },
             {
-                "url": "assets/my_rankbtn.png",
+                "url": "assets/mypage/my_rankbtn.png",
                 "type": "image",
-                "key": "my_rankbtn"
+                "key": "my_rankbtn_1"
             },
             {
                 "url": "assets/mypage/my_reset.png",

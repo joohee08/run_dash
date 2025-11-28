@@ -52,11 +52,6 @@ class player_pg extends Phaser.Scene {
 		my_ques.scaleX = 0.1;
 		my_ques.scaleY = 0.1;
 
-		// my_btn
-		const my_btn = this.add.image(974, 612, "my_btn");
-		my_btn.scaleX = 0.4;
-		my_btn.scaleY = 0.4;
-
 		// container_1
 		const container_1 = this.add.container(974, 331);
 
@@ -105,15 +100,20 @@ class player_pg extends Phaser.Scene {
 		rectangle.fillColor = 4688071;
 		container_2.add(rectangle);
 
-		// my_rankbtn
-		const my_rankbtn = this.add.image(970, 149, "my_rankbtn");
-		my_rankbtn.scaleX = 0.55;
-		my_rankbtn.scaleY = 0.55;
-
 		// back
 		const back = this.add.image(46, 35, "back");
 		back.scaleX = 0.25;
 		back.scaleY = 0.25;
+
+		// my_rankbtn_1
+		const my_rankbtn_1 = this.add.image(970, 149, "my_rankbtn_1");
+		my_rankbtn_1.scaleX = 0.55;
+		my_rankbtn_1.scaleY = 0.55;
+
+		// my_btn_1
+		const my_btn_1 = this.add.image(974, 612, "my_btn_1");
+		my_btn_1.scaleX = 0.4;
+		my_btn_1.scaleY = 0.4;
 
 		this.events.emit("scene-awake");
 	}
@@ -135,91 +135,180 @@ class player_pg extends Phaser.Scene {
 
 	create(data) {
 		this.editorCreate();
+		this.PlayerloadCharacters(data);
+        this.PlayercreateAnimations();
+        this.PlayercreatePlayer();
+        this.PlayersetupMainButtons();
+		this.setupStartButton();
+        this.setupBackButton();
+		this.setupSettingButton();
+	}
 
-		   // 선택된 캐릭터 이름 (예: pachang, brory)
-			let selectedKey = data?.selected || localStorage.getItem("selectedCharacter") || "pachang";
+	//선택된 캐릭터 불러오기
+	 PlayerloadCharacters(data) {
+        this.chars = ["pachang", "brory", "conky", "tomang", "pote", "pyogoni"];
 
-			const chars = ["pachang", "brory", "conky", "tomang", "pote", "pyogoni"];
-			chars.forEach(key => {
-				const animKey = `${key}_move`;
+        // 선택 캐릭터 결정
+        this.selectedKey =
+            data?.selected ||
+            localStorage.getItem("selectedCharacter") ||
+            "pachang";
+    }
 
-				if (!this.anims.exists(animKey)) {
-					this.anims.create({
-						key: animKey,
-						frames: this.anims.generateFrameNumbers(`${key}_anim`),
-						frameRate: 23,
-						repeat: -1
-					});
-				}
+	//캐릭터 애니메이션 생성
+	 PlayercreateAnimations() {
+        this.chars.forEach(key => {
+            const animKey = `${key}_move`;
+
+            if (!this.anims.exists(animKey)) {
+                this.anims.create({
+                    key: animKey,
+                    frames: this.anims.generateFrameNumbers(`${key}_anim`),
+                    frameRate: 23,
+                    repeat: -1
+                });
+            }
+        });
+    }
+
+	PlayercreatePlayer() {
+        this.player = this.add.sprite(350, 300, `${this.selectedKey}_anim`);
+
+        // tomang, pote만 크기 조절
+        let scale = ["tomang", "pote"].includes(this.selectedKey) ? 0.8 : 1;
+        this.player.setScale(scale);
+
+        // 애니메이션 재생
+        this.player.play(`${this.selectedKey}_move`);
+    }
+
+	PlayersetupMainButtons() {
+        const buttons = ["my_btn2", "my_btn3", "my_btn4"];
+
+        buttons.forEach(key => {
+            const btn = this.children.list.find(obj => obj.texture?.key === key);
+            if (!btn) return;
+
+            btn.setInteractive({ useHandCursor: true, pixelPerfect: true });
+            const defaultScale = 0.35;
+
+            btn.on("pointerdown", () => {
+                this.tweens.add({
+                    targets: btn,
+                    scale: defaultScale * 0.8,
+                    duration: 80,
+                    ease: "Quad.easeOut"
+                });
+            });
+
+            btn.on("pointerup", () => {
+                this.tweens.add({
+                    targets: btn,
+                    scale: defaultScale,
+                    duration: 100,
+                    ease: "Bounce.easeOut"
+                });
+
+                // 이동 기능 분기
+                if (key === "my_btn2") {
+                    this.scene.start("Map1");
+                } else if (key === "my_btn3") {
+                    this.scene.start("Charac_selec");
+                } else if (key === "my_btn4") {
+                    this.scene.launch("Profile");
+                    this.scene.pause();
+                }
+            });
+
+            btn.on("pointerout", () => {
+                btn.setScale(defaultScale);
+            });
+        });
+    }
+
+	//게임시작버튼//
+	setupStartButton() {
+			const startBtn = this.children.list.find(obj => obj.texture?.key === "my_btn_1");
+			if (!startBtn) return;
+
+			const defaultScale = 0.4;
+			startBtn.setInteractive({ useHandCursor: true });
+
+			startBtn.on("pointerdown", () => {
+				this.tweens.add({
+					targets: startBtn,
+					scale: defaultScale * 0.85,
+					duration: 80
+				});
 			});
 
-			// 스프라이트 생성 (★ 반드시 _anim 사용)
-			this.player = this.add.sprite(350, 300, `${selectedKey}_anim`);
+			startBtn.on("pointerup", () => {
 
-			//토망 포테만 크기 작게
-			let scale = ["tomang","pote"].includes(selectedKey) ? 0.8 : 1;
-			this.player.setScale(scale);
-
-
-			// 애니메이션 재생
-			this.player.play(`${selectedKey}_move`);
-
-
-		//지도 ,캐릭터 선택, 프로필 버튼
-		const buttons = ["my_btn2", "my_btn3", "my_btn4"];
-
-		buttons.forEach(key => {
-			const btn = this.children.list.find(obj => obj.texture?.key === key);
-
-			if (btn) {
-				btn.setInteractive({
-					useHandCursor: true,
-					pixelPerfect: true,
-					alphaTolerance: 1
+				this.tweens.add({
+					targets: startBtn,
+					scale: defaultScale,
+					duration: 100,
+					ease: "Bounce.easeOut"
 				});
 
-				const defaultScale = 0.35;
+				// 게임 시작 Ep1.js 실행
+				this.scene.start("Ep1");
+			});
 
-				// 눌렀을 때 작아짐
-				btn.on("pointerdown", () => {
-					this.tweens.add({
-						targets: btn,
-						scale: defaultScale * 0.8,
-						duration: 80,
-						ease: "Quad.easeOut"
-					});
-				});
+			startBtn.on("pointerout", () => {
+				startBtn.setScale(defaultScale);
+			});
+		}
 
-				// 손을 뗐을 때 원래 크기로 복원 + 버튼별 기능 실행
-				btn.on("pointerup", () => {
-					this.tweens.add({
-						targets: btn,
-						scale: defaultScale,
-						duration: 100,
-						ease: "Bounce.easeOut"
-					});
+	//뒤로가기 버튼
+	setupBackButton() {
+        const backBtn = this.children.list.find(obj => obj.texture?.key === "back");
+        if (!backBtn) return;
 
-					// 버튼별 이동
-					if (key === "my_btn2") {
-						console.log("지도 버튼 클릭됨 → Map1 씬으로 이동");
-						this.scene.start("Map1");
-					} else if (key === "my_btn3") {
-						this.scene.start("Charac_selec");
-						console.log("캐릭터 선택 화면으로 이동");
-					} else if (key === "my_btn4") {
-						this.scene.launch("Profile"); //씬 이동은 아니고 팝업처럼 띄움
-						this.scene.pause(); //현재 씬 일시정지
-						console.log("프로필 화면으로 이동");
-					}
-				});
+		setInteractiveButton(backBtn);
+        const defaultScale = 0.25;
+        backBtn.setInteractive({ useHandCursor: true });
 
-				// 커서가 벗어났을 때 원래 크기로 복원
-				btn.on("pointerout", () => {
-					btn.setScale(defaultScale);
-				});
-			}
+        backBtn.on("pointerdown", () => {
+            this.tweens.add({
+                targets: backBtn,
+                scale: defaultScale * 0.85,
+                duration: 80
+            });
+        });
+
+        backBtn.on("pointerup", () => {
+            this.tweens.add({
+                targets: backBtn,
+                scale: defaultScale,
+                duration: 100,
+                ease: "Bounce.easeOut"
+            });
+            this.scene.start("Level");
+        });
+
+        backBtn.on("pointerout", () => backBtn.setScale(defaultScale));
+    }
+
+	//설정 버튼 클릭//
+	setupSettingButton() {
+		const settingBtn = this.children.list.find(obj => obj.texture?.key === "setting_btn");
+		if (!settingBtn) return;
+
+		settingBtn.setInteractive({ useHandCursor: true });
+
+		settingBtn.on("pointerdown", () => {
+			// 팝업 띄우기
+			this.scene.launch("settings");
+
+			// player_pg 일시정지 (뒤 배경 멈춤)
+			this.scene.pause();
 		});
 	}
+
+
+
+
 
 }
 
