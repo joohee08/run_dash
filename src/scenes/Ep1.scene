@@ -25,6 +25,7 @@
         },
         {
             "type": "Container",
+<<<<<<< HEAD
             "id": "31f7cb15-5ee8-418b-b54f-6ab971a5b30b",
             "label": "pgfloors",
             "x": 146,
@@ -79,6 +80,36 @@
                     "x": 1188.219970703125
                 }
             ]
+=======
+            "id": "4f5c7009-6958-457d-92ac-d695fe3b273e",
+            "label": "floor_1",
+            "x": 148,
+            "y": 669
+        },
+        {
+            "type": "Image",
+            "id": "d54339e4-d763-437c-8292-aba8362f2c4e",
+            "label": "play",
+            "texture": {
+                "key": "play"
+            },
+            "x": 1232,
+            "y": 47,
+            "scaleX": 0.08,
+            "scaleY": 0.08
+        },
+        {
+            "type": "Image",
+            "id": "d57e58d8-6e73-4be4-9d45-35a3c1d00179",
+            "label": "score",
+            "texture": {
+                "key": "score"
+            },
+            "x": 1082,
+            "y": 50,
+            "scaleX": 0.3,
+            "scaleY": 0.3
+>>>>>>> ecf582a9c6954eeb5a117ceee9e2daaccd7a465b
         },
         {
             "type": "Container",
@@ -149,6 +180,7 @@
         },
         {
             "type": "Image",
+<<<<<<< HEAD
             "id": "d57e58d8-6e73-4be4-9d45-35a3c1d00179",
             "label": "score",
             "texture": {
@@ -170,6 +202,55 @@
             "y": 47,
             "scaleX": 0.08,
             "scaleY": 0.08
+=======
+            "id": "fd4959d2-188f-46f8-93d6-bd3c93beeafb",
+            "label": "pg1flor",
+            "texture": {
+                "key": "pg1flor"
+            },
+            "x": 146,
+            "y": 672
+        },
+        {
+            "type": "Image",
+            "id": "781494d0-b551-42b8-95dc-46b47b229ea5",
+            "label": "pg1flor_1",
+            "texture": {
+                "key": "pg1flor"
+            },
+            "x": 445.16,
+            "y": 671.89
+        },
+        {
+            "type": "Image",
+            "id": "65860bc9-111a-4070-a3e2-f97e0d256803",
+            "label": "pg1flor_2",
+            "texture": {
+                "key": "pg1flor"
+            },
+            "x": 741.26,
+            "y": 671.88
+        },
+        {
+            "type": "Image",
+            "id": "3a856592-8122-400b-9e5f-9769e3d09eb8",
+            "label": "pg1flor_3",
+            "texture": {
+                "key": "pg1flor"
+            },
+            "x": 1037.82,
+            "y": 671.63
+        },
+        {
+            "type": "Image",
+            "id": "09d8fd72-8317-4367-98a1-ee2bc5376d44",
+            "label": "pg1flor_4",
+            "texture": {
+                "key": "pg1flor"
+            },
+            "x": 1334.22,
+            "y": 670.97
+>>>>>>> ecf582a9c6954eeb5a117ceee9e2daaccd7a465b
         }
     ],
     "plainObjects": [],

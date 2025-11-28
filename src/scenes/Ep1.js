@@ -27,6 +27,7 @@ class Ep1 extends Phaser.Scene {
 		pg1back.scaleX = 0.67;
 		pg1back.scaleY = 0.67;
 
+<<<<<<< HEAD
 		// pgfloors
 		const pgfloors = this.add.container(146, 670.969970703125);
 
@@ -49,6 +50,20 @@ class Ep1 extends Phaser.Scene {
 		// pg1flor_4
 		const pg1flor_4 = this.add.image(1188.219970703125, 0, "pg1flor");
 		pgfloors.add(pg1flor_4);
+=======
+		// floor_1
+		this.add.container(148, 669);
+
+		// play
+		const play = this.add.image(1232, 47, "play");
+		play.scaleX = 0.08;
+		play.scaleY = 0.08;
+
+		// score
+		const score = this.add.image(1082, 50, "score");
+		score.scaleX = 0.3;
+		score.scaleY = 0.3;
+>>>>>>> ecf582a9c6954eeb5a117ceee9e2daaccd7a465b
 
 		// life
 		const life = this.add.container(64, 52.72999954223633);
@@ -83,6 +98,7 @@ class Ep1 extends Phaser.Scene {
 		heart_4.scaleY = 0.11;
 		life.add(heart_4);
 
+<<<<<<< HEAD
 		// score
 		const score = this.add.image(1082, 50, "score");
 		score.scaleX = 0.3;
@@ -92,6 +108,22 @@ class Ep1 extends Phaser.Scene {
 		const play = this.add.image(1232, 47, "play");
 		play.scaleX = 0.08;
 		play.scaleY = 0.08;
+=======
+		// pg1flor
+		this.add.image(146, 672, "pg1flor");
+
+		// pg1flor_1
+		this.add.image(445.16, 671.89, "pg1flor");
+
+		// pg1flor_2
+		this.add.image(741.26, 671.88, "pg1flor");
+
+		// pg1flor_3
+		this.add.image(1037.82, 671.63, "pg1flor");
+
+		// pg1flor_4
+		this.add.image(1334.22, 670.97, "pg1flor");
+>>>>>>> ecf582a9c6954eeb5a117ceee9e2daaccd7a465b
 
 		this.events.emit("scene-awake");
 	}
@@ -136,8 +168,11 @@ class Ep1 extends Phaser.Scene {
         this.player.height * 0.35 * 0.55             // 아래쪽에 충돌박스 고정
     );
 
+<<<<<<< HEAD
 	 	this.player.originalY = this.player.y;
 
+=======
+>>>>>>> ecf582a9c6954eeb5a117ceee9e2daaccd7a465b
 		this.physics.add.collider(this.player, this.ground);
 	}
 
@@ -146,12 +181,17 @@ class Ep1 extends Phaser.Scene {
 		this.cursors = this.input.keyboard.createCursorKeys();
 		this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
+<<<<<<< HEAD
 		// 터치만 점프 가능하게 하고, 마우스는 안 되게 하기
 		this.input.on("pointerdown", (pointer) => {
 		if (pointer.pointerType === "touch") {
 			this.Ep1playerJump();
 		}
 	});
+=======
+		// 마우스 클릭 점프
+		this.input.on("pointerdown", () => this.Ep1playerJump());
+>>>>>>> ecf582a9c6954eeb5a117ceee9e2daaccd7a465b
 	}
 
 	//점프 함수//
@@ -161,6 +201,7 @@ class Ep1 extends Phaser.Scene {
 		}
 	}
 
+<<<<<<< HEAD
 	//방향키 아래 캐릭터 작아지는 함수//
 	Ep1shrinkPlayer() {
 		const newScale = this.originalScale * 0.7;
@@ -206,6 +247,23 @@ class Ep1 extends Phaser.Scene {
         this.Ep1restorePlayer();
     }
 }
+=======
+	update() {
+
+		// ★ 스페이스바 점프
+		if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
+			this.Ep1playerJump();
+		}
+
+		// ★ ↓ 방향키 → 작아짐
+		if (this.cursors.down.isDown) {
+			this.player.setScale(this.originalScale * 0.7); // 약 30% 작아짐
+		} else {
+			// ↓ 키에서 손 떼면 원래 크기로
+			this.player.setScale(this.originalScale);
+		}
+	}
+>>>>>>> ecf582a9c6954eeb5a117ceee9e2daaccd7a465b
 
 
 	/* END-USER-CODE */
